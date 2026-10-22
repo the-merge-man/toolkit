@@ -1,0 +1,204 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usetheme{default}
+\usecolortheme{seahorse}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+
+\definecolor{accent}{HTML}{3B6EA8}
+\definecolor{ink}{HTML}{4A4A4A}
+\definecolor{paper}{HTML}{F7FAFC}
+\definecolor{codebg}{HTML}{E8EEF4}
+
+\setbeamercolor{structure}{fg=accent}
+\setbeamercolor{frametitle}{fg=accent}
+\setbeamercolor{background canvas}{bg=paper}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+
+% Footer: frame number only
+\setbeamertemplate{footline}{\hfill\textcolor{accent}{\insertframenumber}\hspace{1em}\vspace{0.6em}}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize\color{ink},
+  backgroundcolor=\color{codebg},
+  commentstyle=\color{accent!80!black},
+  frame=none,
+  xleftmargin=0.5em,
+  framexleftmargin=0.5em,
+  framextopmargin=0.5em,
+  framexbottommargin=0.5em,
+  columns=fullflexible,
+  keepspaces=true,
+  language={}
+}
+
+\title{Contributing to a Website with Version Control}
+\author{Jack Simon}
+\date{}
+
+\begin{document}
+
+% ---------- 1: Title ----------
+\begin{frame}[plain]
+  \vfill
+  \begin{flushleft}
+    \hspace{1.2em}{\Huge\bfseries\color{accent} Contributing to a Website\\ \hspace{1.2em}with Version Control\par}
+    \vspace{0.8em}
+    \begin{center}{\large\bfseries Nagan Lab}\end{center}
+  \end{flushleft}
+  \vfill
+\end{frame}
+
+% ---------- 2: Contents ----------
+\begin{frame}{Table of Contents}
+  \bfseries
+  \begin{enumerate}
+    \setlength\itemsep{0.4em}
+    \item History of version control
+    \item Git basics
+    \item Getting started
+    \item The daily loop
+    \item Editing and review workflow
+    \item Running the site on localhost
+    \item Useful commands
+  \end{enumerate}
+\end{frame}
+
+% ---------- 4: History ----------
+\begin{frame}{1. History of Version Control}
+  \small
+  \begin{itemize}
+    \setlength\itemsep{0.5em}
+    \item \textbf{1970s--80s, SCCS and RCS:} track single files on one machine; one editor at a time.
+    \item \textbf{1990, CVS:} first shared server for whole projects, but commits were not atomic.
+    \item \textbf{2000, Subversion:} atomic commits (all changes save together or not at all).
+    \item \textbf{2005, Git:} everyone holds the full history, so branching and merging are cheap.
+    \item \textbf{2008 onward, GitHub and GitLab:} hosting, SSH access, issues and merge requests.
+  \end{itemize}
+\end{frame}
+
+% ---------- 3: Git basics ----------
+\begin{frame}{2. Git Basics}
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      \textbf{\color{accent}Repository}\\[0.4em]
+      The project folder plus its full history of changes.
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \textbf{\color{accent}Commit}\\[0.4em]
+      A saved snapshot of your changes with a message explaining why.
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \textbf{\color{accent}Remote}\\[0.4em]
+      The shared copy on GitLab that everyone pulls from and pushes to.
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------- Getting started ----------
+\begin{frame}{3. Getting Started}
+  \small
+  \begin{enumerate}
+    \setlength\itemsep{0.55em}
+    \item \textbf{Email the GitLab owner} to ask for access to the project.
+    \item \textbf{Generate a key:} \texttt{ssh-keygen -t ed25519 -C "you@example.com"}\\
+          Press Enter through the prompts to accept the defaults.
+    \item \textbf{Copy the public key:} \texttt{cat \textasciitilde/.ssh/id\_ed25519.pub}
+    \item \textbf{Add it to GitLab:} User Settings $\to$ \textbf{SSH Keys}, paste the key, click \textbf{Add key}.
+    \item \textbf{Test the connection:} \texttt{ssh -T git@gitlab.com}
+    \item \textbf{Clone the repository:} \texttt{git clone git@gitlab.com:team/website.git}, then \texttt{cd website}.
+  \end{enumerate}
+  \vspace{0.4em}
+  Only ever share the \emph{public} key (\texttt{.pub}); keep the private key to yourself.
+\end{frame}
+
+% ---------- 6: Daily loop ----------
+\begin{frame}[fragile]{4. The Daily Loop}
+  \begin{center}
+    \Large \textbf{\color{accent}Pull your branch} $\rightarrow$ \textbf{Edit} $\rightarrow$ \textbf{Commit} $\rightarrow$ \textbf{Merge main} $\rightarrow$ \textbf{Push}
+  \end{center}
+  \vspace{0.4em}
+\begin{lstlisting}
+git checkout my-branch        # first time: git checkout -b my-branch
+git pull origin my-branch     # start from the latest of your branch
+# ... edit files, test locally ...
+git add .
+git commit -m "Describe the change"
+git fetch origin
+git merge origin/main         # merge main into your branch
+git push origin my-branch     # share your branch
+\end{lstlisting}
+  \vspace{0.4em}
+  Pull often, commit small, and never share your private key.
+\end{frame}
+
+% ---------- Edit and review workflow ----------
+\begin{frame}{5. Editing and Review Workflow}
+  \begin{center}
+    \Large \textbf{\color{accent}Edit} $\rightarrow$ \textbf{Preview} $\rightarrow$ \textbf{Reviewer} $\rightarrow$ \textbf{Push}
+  \end{center}
+  \vspace{0.3em}
+  \begin{enumerate}
+    \setlength\itemsep{0.6em}
+    \item \textbf{Edit} the files on your branch.
+    \item \textbf{Preview:} the website gives you a link to your particular commit. Copy it and paste it into your browser to see your change.
+    \item \textbf{Select a reviewer:} in GitLab, open your merge request and choose a \textbf{Reviewer} from the sidebar.
+    \item \textbf{Push} your branch: \texttt{git push origin my-branch}.
+  \end{enumerate}
+\end{frame}
+
+% ---------- 9: Localhost ----------
+\begin{frame}[fragile]{6. Running the Site on Localhost}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{\color{accent}Option A: Terminal}
+\begin{lstlisting}
+# plain HTML site
+python3 -m http.server 8000
+# http://localhost:8000
+
+# Node-based site
+npm install
+npm run dev
+\end{lstlisting}
+      \vspace{0.3em}
+      Stop with \texttt{Ctrl+C}.
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textbf{\color{accent}Option B: MAMP (PHP/MySQL)}
+      \begin{enumerate}\small
+        \item Install MAMP.
+        \item Put the repo in \texttt{htdocs}, or set the Document Root in Preferences $\to$ Server.
+        \item Click \textbf{Start}.
+        \item Open \texttt{http://localhost:8888}.
+      \end{enumerate}
+      {\small If it fails, check Preferences $\to$ Ports.}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  Test on localhost, then commit and push.
+\end{frame}
+
+
+% ---------- 7: Useful commands ----------
+\begin{frame}{7. Useful Commands}
+  \small
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabular}{@{}p{0.36\textwidth}p{0.56\textwidth}@{}}
+    \textbf{\color{accent}Command} & \textbf{\color{accent}What it does} \\
+    \hline
+    \texttt{git status}              & Show changed and staged files \\
+    \texttt{git diff}                & See exactly what you changed \\
+    \texttt{git log --oneline}       & Compact history of commits \\
+    \texttt{git branch}              & List branches (current one marked) \\
+    \texttt{git checkout -b name}    & Create and switch to a new branch \\
+    \texttt{git fetch origin}        & Download updates without merging \\
+    \texttt{git stash} / \texttt{git stash pop} & Shelve unfinished work, then bring it back \\
+    \texttt{git restore file}        & Discard your edits to a file \\
+  \end{tabular}
+\end{frame}
+
+\end{document}
