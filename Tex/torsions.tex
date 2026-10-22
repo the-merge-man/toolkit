@@ -1,0 +1,89 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usetheme{default}
+\usecolortheme{seahorse}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+
+\definecolor{accent}{HTML}{3B6EA8}
+\definecolor{ink}{HTML}{4A4A4A}
+\definecolor{paper}{HTML}{F7FAFC}
+\definecolor{codebg}{HTML}{E8EEF4}
+
+\setbeamercolor{structure}{fg=accent}
+\setbeamercolor{frametitle}{fg=accent}
+\setbeamercolor{background canvas}{bg=paper}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+
+% Footer: frame number only
+\setbeamertemplate{footline}{\hfill\textcolor{accent}{\insertframenumber}\hspace{1em}\vspace{0.6em}}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize\color{ink},
+  backgroundcolor=\color{codebg},
+  commentstyle=\color{accent!80!black},
+  frame=none,
+  xleftmargin=0.5em,
+  framexleftmargin=0.5em,
+  framextopmargin=0.5em,
+  framexbottommargin=0.5em,
+  columns=fullflexible,
+  keepspaces=true,
+  language={}
+}
+
+\title{Torsions: Definition, Dynamics and Conformational Biases}
+\author{Jack Simon}
+\date{}
+
+\begin{document}
+
+% ---------- 1: Title ----------
+
+\begin{frame}[plain]
+  \vfill
+  \centering
+  \begin{minipage}{0.88\textwidth}
+    \raggedright
+
+    \noindent\makebox[\linewidth][l]{%
+      {\Huge\bfseries\color{accent} Torsions}%
+    }\par
+    \vspace{0.4em}
+
+    \noindent\makebox[\linewidth][l]{%
+      {\Large\bfseries\color{accent!85!black}
+      Definition, Dynamics and Conformational Biases}%
+    }\par
+
+    \vspace{1.2em}
+    {\color{accent!40}\hrule height 1.5pt}
+    \vspace{1.2em}
+
+    {\large\bfseries\color{ink} Jack Simon\par}
+    \vspace{0.3em}
+    {\small\color{ink!80} Nagan Lab\par}
+
+  \end{minipage}
+  \vfill
+\end{frame}
+
+
+% ---------- 2: Contents ----------
+\begin{frame}{Table of Contents}
+  \bfseries
+  \begin{enumerate}
+    \setlength\itemsep{0.4em}
+    \item Definition 
+    \item Viewpoints
+    \item 
+  \end{enumerate}
+\end{frame}
+
+
+
+
+\end{document}
